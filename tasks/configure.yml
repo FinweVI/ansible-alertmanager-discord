@@ -1,0 +1,37 @@
+---
+- name: generate alertmanager-discord config
+  template:
+    force: true
+    src: alertmanager-discord.j2
+    dest: "{{ alertmanager_discord_config_dir }}/{{ item.name }}.conf"
+    owner: alertmanager-discord
+    group: alertmanager-discord
+    mode: 0600
+  notify:
+    - restart alertmanager-discord
+  loop: "{{ alertmanager_discord_instances }}"
+  loop_control: 
+    label: "{{ item.name }}"
+  vars:
+    name: "{{ item.name }}"
+    webhook: "{{ item.webhook }}"
+    listen_address: "{{ item.listen_address }}"
+
+- name: create systemd service unit
+  template:
+    src: alertmanager-discord@.service.j2
+    dest: /etc/systemd/system/alertmanager-discord@.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart alertmanager-discord
+
+- name: "Enable and start alertmanager-discord systemd unit"
+  systemd:
+    name: "alertmanager-discord@{{ item.name }}"
+    enabled: true
+    state: started
+    daemon_reload: true
+  loop: "{{ alertmanager_discord_instances }}"
+  loop_control: 
+    label: "{{ item.name }}"

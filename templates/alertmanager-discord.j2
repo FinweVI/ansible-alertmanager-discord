@@ -1,0 +1,4 @@
+# Ansible Managed
+# Discord Webhook for {{ name }}
+DISCORD_WEBHOOK={{ webhook }}
+LISTEN_ADDRESS={{ listen_address | default(alertmanager_discord_default_listen_address, true) }}

@@ -1,0 +1,12 @@
+---
+- name: restart alertmanager-discord
+  become: true
+  service:
+    name: "alertmanager-discord@{{ item.name }}"
+    state: restarted
+  tags:
+    - alertmanager_discord_run
+  loop: "{{ alertmanager_discord_instances }}"
+  loop_control: 
+    label: "{{ item.name }}"
+

@@ -1,0 +1,42 @@
+---
+
+- name: create alertmanager-discord system group
+  group:
+    name: alertmanager-discord
+    system: true
+    state: present
+
+- name: create alertmanager-discord system user
+  user:
+    name: alertmanager-discord
+    system: true
+    shell: "/sbin/nologin"
+    group: alertmanager-discord
+    createhome: false
+
+- name: create alertmanager-discord directory
+  file:
+    path: "{{ alertmanager_discord_config_dir }}"
+    state: directory
+    owner: alertmanager-discord
+    group: alertmanager-discord
+    mode: 0755
+
+- name: install dependencies
+  package:
+    name: "{{ alertmanager_discord_dependencies }}"
+    state: present
+
+- name: go get alertmanager-discord
+  command: "go get -u {{ alertmanager_discord_repository }}@{{ alertmanager_discord_version }}"
+  environment:
+    GO111MODULE: "on"
+    GOPATH: "{{ ansible_env.HOME }}/go"
+
+- name: propagate alertmanager-discord binaries
+  copy:
+    remote_src: yes
+    src: "{{ ansible_env.HOME }}/go/bin/alertmanager-discord"
+    dest: /usr/local/bin/alertmanager-discord
+    mode: '0755'
+  notify: restart alertmanager-discord

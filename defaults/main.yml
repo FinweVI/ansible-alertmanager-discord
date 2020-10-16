@@ -1,0 +1,18 @@
+---
+alertmanager_discord_version: latest
+
+alertmanager_discord_config_dir: /etc/alertmanager-discord
+
+alertmanager_discord_instance: "{{ ansible_fqdn | default(ansible_host) | default(inventory_hostname) }}"
+alertmanager_discord_repository: "github.com/benjojo/alertmanager-discord"
+
+alertmanager_discord_address: "127.0.0.1"
+alertmanager_discord_port: 9094
+alertmanager_discord_default_listen_address: "{{ alertmanager_discord_address }}:{{ alertmanager_discord_port }}"
+
+alertmanager_discord_instances: []
+# Example:
+#   - name: my_discord_channel
+#     webhook: https://discord.com/api/webhooks/...
+#     listen_address: "127.0.0.1:9094"
+#

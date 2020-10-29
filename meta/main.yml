@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Finwë
-  description: Sachet
+  description: AlertManager Discord
   license: MIT
   company: none
   min_ansible_version: 2.5

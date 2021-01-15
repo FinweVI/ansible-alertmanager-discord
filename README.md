@@ -4,7 +4,8 @@ Provision and manage [alertmanager-discord](https://github.com/benjojo/alertmana
 
 ## Requirements
 
-- Ansible >= 2.5
+- Ansible >= 2.8
+- Role gantsign.golang
 
 ## Role Variables
 
@@ -19,6 +20,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `alertmanager_discord_repository` | github.com/benjojo/alertmanager-discord | github link to the source code |
 | `alertmanager_discord_default_listen_address` | 127.0.0.1:9094 | Full listening address based on the address and port variable |
 | `alertmanager_discord_instances` | [] | yaml list of instances for alertmanager_discord |
+| `golang_gopath` | None | Required as the binary will be built from sources |
 
 See the [defaults/main.yml](defaults/main.yml) file for examples.
 

@@ -1,4 +1,3 @@
 ---
 alertmanager_discord_dependencies:
   - git
-  - golang-go

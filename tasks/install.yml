@@ -28,15 +28,15 @@
     state: present
 
 - name: go get alertmanager-discord
-  command: "go get -u {{ alertmanager_discord_repository }}@{{ alertmanager_discord_version }}"
+  command: "{{ ansible_local.golang.general.home }}/bin/go get -u {{ alertmanager_discord_repository }}@{{ alertmanager_discord_version }}"
   environment:
     GO111MODULE: "on"
-    GOPATH: "{{ ansible_env.HOME }}/go"
+    GOPATH: "{{ golang_gopath }}"
 
 - name: propagate alertmanager-discord binaries
   copy:
     remote_src: yes
-    src: "{{ ansible_env.HOME }}/go/bin/alertmanager-discord"
+    src: "{{ golang_gopath }}/bin/alertmanager-discord"
     dest: /usr/local/bin/alertmanager-discord
     mode: '0755'
   notify: restart alertmanager-discord

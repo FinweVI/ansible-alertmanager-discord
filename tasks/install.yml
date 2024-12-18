@@ -27,7 +27,7 @@
     name: "{{ alertmanager_discord_dependencies }}"
     state: present
 
-- name: go instal alertmanager-discord
+- name: go install alertmanager-discord
   command: "{{ ansible_local.golang.general.home }}/bin/go install {{ alertmanager_discord_repository }}@{{ alertmanager_discord_version }}"
   environment:
     GO111MODULE: "on"
